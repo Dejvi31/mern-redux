@@ -15,7 +15,7 @@ const notes = [
   {
     _id: "3",
     title: "Watched some Anime",
-    content: "Finished 2 seasons of Attack on Titan and My Hero academia.",
+    content: "Finished 2 seasons of Vinland Saga",
     category: "Entertainment",
   },
   {
