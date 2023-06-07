@@ -1,83 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import MainScreen from "../../components/MainScreen";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
-import axios from "axios";
+import Loading from "../../components/Loading";
+import ErrorMessage from "../../components/ErrorMessage";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { listNotes } from "../../actions/notesActions";
 
 const MyNotes = () => {
-  const [notes, setNotes] = useState([]);
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const noteList = useSelector((state) => state.noteList);
+  const { loading, notes, error } = noteList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const noteCreate = useSelector((state) => state.noteCreate);
+  const { success: successCreate } = noteCreate;
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
+      // Perform the delete operation
     }
   };
-  const fetchNotes = async () => {
-    const { data } = await axios.get("http://localhost:5000/api/notes");
-    console.log(data);
-    setNotes(data);
-  };
+
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    dispatch(listNotes());
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [dispatch, successCreate, navigate, userInfo]);
+
   return (
-    <MainScreen title="Welcome back Dejvi">
-      <Link to="createnote">
+    <MainScreen title={`Welcome Back ${userInfo.name}`}>
+      <Link to={"/createnote"}>
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Note
         </Button>
       </Link>
-
-      {notes.map((note) => {
+      {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+      {loading && <Loading />}
+      {notes?.reverse().map((note) => {
         return (
-          // <Accordion defaultActiveKey={["0"]} key={note._id}>
-          //   <Accordion.Item eventkey="0">
-          //     <Card style={{ margin: 10 }}>
-          //       <Card.Header style={{ display: "flex" }}>
-          //         <span
-          //           style={{
-          //             color: "black",
-          //             textDecoration: "none",
-          //             flex: 1,
-          //             cursor: "pointer",
-          //             alignSelf: "center",
-          //             fontSize: 18,
-          //           }}
-          //         >
-          //           <Accordion.Button as={Card.Text} variant="link">
-          //             {note.title}
-          //           </Accordion.Button>
-          //         </span>
-          //         <div>
-          //           <Button href={`/note/${note._id}`}>Edit</Button>
-          //           <Button
-          //             variant="danger"
-          //             className="mx-2"
-          //             onClick={() => deleteHandler(note._id)}
-          //           >
-          //             Delete
-          //           </Button>
-          //         </div>
-          //       </Card.Header>
-          //       <Accordion.Collapse>
-          //         <Card.Body>
-          //           <h4>
-          //             <Badge bg="success" text="light">
-          //               Category - {note.category}
-          //             </Badge>
-          //           </h4>
-
-          //           <blockquote className="blockquote mb-0">
-          //             <p>{note.content}</p>
-          //             <footer className="blockquote-footer">
-          //               Created on - date
-          //             </footer>
-          //           </blockquote>
-          //         </Card.Body>
-          //       </Accordion.Collapse>
-          //     </Card>
-          //   </Accordion.Item>
-          // </Accordion>
-
           <Accordion defaultActiveKey={["0"]} key={note._id}>
             <Card style={{ margin: 10 }}>
               <Card.Header style={{ display: "flex" }}>
@@ -113,13 +80,17 @@ const MyNotes = () => {
                       Category - {note.category}
                     </Badge>
                   </h4>
-
-                  <blockquote className="blockquote mb-0">
-                    <p>{note.content}</p>
-                    <footer className="blockquote-footer">
-                      Created on - date
-                    </footer>
-                  </blockquote>
+                  {note.createdAt && (
+                    <blockquote className="blockquote mb-0">
+                      <p>{note.content}</p>
+                      <footer className="blockquote-footer">
+                        Created on{" "}
+                        <cite title="Source Title">
+                          {note.createdAt.substring(0, 10)}
+                        </cite>
+                      </footer>
+                    </blockquote>
+                  )}
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
