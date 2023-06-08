@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 
-const Header = () => {
+const Header = ({ setSearch }) => {
   let navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -37,12 +37,16 @@ const Header = () => {
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2"
+                onChange={(e) => setSearch(e.target.value)}
               />
             </Form>
           </Nav>
           <Nav>
             <Nav.Link to="/mynotes">My Notes</Nav.Link>
-            <NavDropdown title="Dejvi Epa" id="basic-nav-dropdown">
+            <NavDropdown
+              title={userInfo ? `${userInfo.name}` : "User"}
+              id="basic-nav-dropdown"
+            >
               <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logoutHandler}>
