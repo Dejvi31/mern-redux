@@ -3,3 +3,7 @@
   flex-direction: column;
   margin: 20px;
 }
+.span-reg {
+  text-decoration: underline;
+  color: #127ba3;
+}

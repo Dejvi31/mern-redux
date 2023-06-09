@@ -20,7 +20,6 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      console.log("navigating");
       navigate("/mynotes");
     }
   }, [navigate, userInfo]);
@@ -60,7 +59,10 @@ const LoginScreen = () => {
         </Form>
         <Row className="py-3">
           <Col>
-            New Customer ? <Link to="/register">Register Here</Link>
+            New Customer ?{" "}
+            <Link to="/register">
+              <span className="span-reg">Register Here</span>
+            </Link>
           </Col>
         </Row>
       </div>

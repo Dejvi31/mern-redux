@@ -23,6 +23,13 @@ const Header = ({ setSearch }) => {
     dispatch(logout());
     navigate("/");
   };
+
+  const login = () => {
+    navigate("/login");
+  };
+  const register = () => {
+    navigate("/register");
+  };
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
       <Container>
@@ -41,19 +48,26 @@ const Header = ({ setSearch }) => {
               />
             </Form>
           </Nav>
-          <Nav>
-            <Nav.Link to="/mynotes">My Notes</Nav.Link>
-            <NavDropdown
-              title={userInfo ? `${userInfo.name}` : "User"}
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={logoutHandler}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
+          {userInfo ? (
+            <Nav>
+              <Nav.Link to="/mynotes">My Notes</Nav.Link>
+              <NavDropdown
+                title={userInfo ? `${userInfo.name}` : "User"}
+                id="basic-nav-dropdown"
+              >
+                <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <Nav>
+              <Nav.Link onClick={login}>Login</Nav.Link>
+              <Nav.Link onClick={register}>Register</Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -136,7 +136,10 @@ const RegisterScreen = () => {
         </Form>
         <Row className="py-3">
           <Col>
-            Have an Account ? <Link to="/login">Login</Link>
+            Have an Account ?
+            <Link to="/login">
+              <span className="span-reg">Login</span>
+            </Link>
           </Col>
         </Row>
       </div>
