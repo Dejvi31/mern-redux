@@ -20,8 +20,8 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/createnote" element={<CreateNote />} />
           <Route path="/note/:id" element={<SingleNote />} />

@@ -28,8 +28,9 @@ const registerUser = asyncHandler(async (req, res) => {
       pic: user.pic,
       token: generateToken(user._id),
     });
+  } else {
     res.status(400);
-    throw new Error('"Error Ocurred');
+    throw new Error('"Error Occurred');
   }
 });
 
@@ -74,5 +75,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found!");
   }
 });
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
 
-module.exports = { registerUser, authUser, updateUserProfile };
+  if (user) {
+    await user.deleteOne();
+    res.json({ message: "User deleted" });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+module.exports = { registerUser, authUser, updateUserProfile, deleteUser };

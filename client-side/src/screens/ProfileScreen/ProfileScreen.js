@@ -4,8 +4,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ErrorMessage from "../../components/ErrorMessage";
-import { useNavigate } from "react-router";
-import { updateProfile } from "../../actions/userActions";
+import { useNavigate } from "react-router-dom";
+import { deleteUserAction, updateProfile } from "../../actions/userActions";
 import Loading from "../../components/Loading";
 import "./ProfileScreen.css";
 
@@ -60,6 +60,20 @@ const ProfileScreen = () => {
         });
     } else {
       return setPicMessage("Please Select An Image");
+    }
+  };
+
+  const handleDeleteUser = () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      dispatch(deleteUserAction(userInfo._id))
+        .then(() => {
+          // After successful deletion, clear user info and navigate to the home page
+          dispatch({ type: "USER_LOGOUT" }); // Clear user info
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -140,8 +154,15 @@ const ProfileScreen = () => {
                   </Form.Label>
                 </div>
               </Form.Group>
-              <Button type="submit" variant="primary">
+              <Button type="submit" variant="success">
                 Update
+              </Button>
+              <Button
+                onClick={handleDeleteUser}
+                variant="danger"
+                className="mx-2"
+              >
+                Delete Account
               </Button>
             </Form>
           </Col>

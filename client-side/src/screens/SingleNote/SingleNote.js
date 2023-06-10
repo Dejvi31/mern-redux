@@ -8,7 +8,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import ErrorMessage from "../../components/ErrorMessage";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import Loading from "../../components/Loading";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SingleNote = () => {
   const [title, setTitle] = useState("");
@@ -120,7 +120,7 @@ const SingleNote = () => {
               />
             </Form.Group>
             {loading && <Loading size={50} />}
-            <Button variant="primary" type="submit">
+            <Button variant="success" type="submit">
               Update Note
             </Button>
             <Button

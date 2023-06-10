@@ -4,7 +4,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useDispatch, useSelector } from "react-redux";
 import { createNoteAction } from "../../actions/notesActions";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage";
 import Loading from "../../components/Loading";
 

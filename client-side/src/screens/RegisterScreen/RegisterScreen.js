@@ -19,7 +19,6 @@ const RegisterScreen = () => {
   const [picMessage, setPicMessage] = useState(null);
 
   let navigate = useNavigate();
-
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
 
@@ -28,6 +27,7 @@ const RegisterScreen = () => {
   useEffect(() => {
     if (userInfo) {
       navigate("/mynotes");
+      window.location.reload();
     }
   }, [navigate, userInfo]);
 
@@ -57,7 +57,6 @@ const RegisterScreen = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setPic(data.url.toString());
         })
         .catch((err) => {
@@ -78,7 +77,7 @@ const RegisterScreen = () => {
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type="name"
+              type="text"
               placeholder="Enter name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -130,7 +129,7 @@ const RegisterScreen = () => {
               </Form.Label>
             </div>
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="success" type="submit">
             Register
           </Button>
         </Form>

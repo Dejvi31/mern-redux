@@ -1,47 +1,49 @@
 import React, { useEffect } from "react";
 import { Button, Container, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import "./LandingPage.css";
-import { useNavigate } from "react-router";
 
-const LandingPage = () => {
+function LandingPage() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   let navigate = useNavigate();
-
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
       navigate("/mynotes");
     }
-  }, [navigate]);
+  }, [navigate, userInfo]);
+
   return (
     <div className="main">
       <Container>
         <Row>
           <div className="intro-text">
             <div>
-              <h1 className="title">Welcome To Note EPA</h1>
-              <p className="subtitle">One Safe place for all your notes</p>
+              <h1 className="title">Welcome to Note Epa</h1>
+              <p className="subtitle">One Safe place for all your notes.</p>
             </div>
             <div className="buttonContainer">
-              <a href="/login">
-                <Button size="lg" className="landingButton">
+              <Link to="/login">
+                <Button variant="primary" size="lg" className="landingbutton">
                   Login
                 </Button>
-              </a>
-              <a href="/register">
+              </Link>
+              <Link to="/register">
                 <Button
-                  size="lg"
-                  className="landingButton"
                   variant="outline-primary"
+                  size="lg"
+                  className="landingbutton"
                 >
                   Signup
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </Row>
       </Container>
     </div>
   );
-};
+}
 
 export default LandingPage;
