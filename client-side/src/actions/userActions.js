@@ -14,6 +14,7 @@ import {
   USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
 import axios from "axios";
+import { BASE_URL } from "../env";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -26,7 +27,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/users/login",
+      `${BASE_URL}/api/users/login`,
       { email, password },
       config
     );
@@ -60,7 +61,7 @@ export const register = (name, email, password, pic) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "http://localhost:5000/api/users",
+      `${BASE_URL}/api/users`,
       { name, pic, email, password },
       config
     );
@@ -94,7 +95,7 @@ export const updateProfile = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/users/profile",
+      `${BASE_URL}/api/users/profile`,
       user,
       config
     );
@@ -129,10 +130,7 @@ export const deleteUserAction = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(
-      `http://localhost:5000/api/users/${id}`,
-      config
-    );
+    const { data } = await axios.delete(`${BASE_URL}/api/users/${id}`, config);
 
     dispatch({
       type: USER_DELETE_SUCCESS,

@@ -9,6 +9,7 @@ import ErrorMessage from "../../components/ErrorMessage";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../../env";
 
 const SingleNote = () => {
   const [title, setTitle] = useState("");
@@ -43,10 +44,7 @@ const SingleNote = () => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.get(
-        `http://localhost:5000/api/notes/${id}`,
-        config
-      );
+      const { data } = await axios.get(`${BASE_URL}/api/notes/${id}`, config);
       setTitle(data.title);
       setContent(data.content);
       setCategory(data.category);
