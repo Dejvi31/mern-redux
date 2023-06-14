@@ -11,7 +11,6 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 app.use(express.json());
 const path = require("path");
 
-app.use(cors());
 app.use(
   cors({
     origin: "https://note-epa.netlify.app",
@@ -26,7 +25,7 @@ app.use("/api/notes", noteRoutes);
 __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
   const root = path.join(__dirname, "../client-side/build");
-  app.use(express.static(path.join(__dirname, "../client-side/build")));
+  app.use(express.static(root));
 
   app.get("*", (req, res) => {
     res.sendFile("index.html", { root });
