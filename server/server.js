@@ -17,6 +17,11 @@ connectDB();
 app.use("/api/users", userRoutes);
 app.use("/api/notes", noteRoutes);
 
+app.use(
+  cors({
+    origin: "https://note-epa.netlify.app/",
+  })
+);
 // ------------- deployment -----------
 
 __dirname = path.resolve();
