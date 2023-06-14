@@ -1,7 +1,7 @@
-# /node_modules
-# /src/.env
-# /build
-# ../server/.env
+/node_modules
+/src/.env
+/build
+../server/.env
 
 # eslint cache
 .eslintcache
