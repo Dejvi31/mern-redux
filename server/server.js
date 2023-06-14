@@ -11,14 +11,15 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 app.use(express.json());
 const path = require("path");
 
-app.use(cors());
-connectDB();
-
 app.use(
   cors({
     origin: "https://note-epa.netlify.app/",
   })
 );
+connectDB();
+app.use("/api/users", userRoutes);
+app.use("/api/notes", noteRoutes);
+
 // ------------- deployment -----------
 
 __dirname = path.resolve();
@@ -37,8 +38,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // -------------- deployment -------------
-app.use("/api/users", userRoutes);
-app.use("/api/notes", noteRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
