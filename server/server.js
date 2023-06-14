@@ -11,9 +11,10 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 app.use(express.json());
 const path = require("path");
 
+app.use(cors());
 app.use(
   cors({
-    origin: "https://note-epa.netlify.app/",
+    origin: "https://note-epa.netlify.app",
   })
 );
 connectDB();
